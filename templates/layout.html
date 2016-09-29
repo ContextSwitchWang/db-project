@@ -15,16 +15,17 @@ This is our database project!<br><br>
 
 {% block footer %}
 <br>
+<br>
 <div>
 	<div style="display: inline-block;padding-left: 500px">
-	{% if teamname %}
-	  By {{ teamname }}<br>
+	{% if g.teamname %}
+	  By {{ g.teamname }}<br>
 	{% else %}
 	{% endif %}
 	Worcester Polytechnic Institute
 	</div>
 	<div  style="display: inline-block;position: relative;top:4;">
-	&nbsp;&nbsp;<img src="{{ img_url }}" height="32px">
+	&nbsp;&nbsp;<img src="{{ g.wpi_logo_url }}" height="32px">
 	</div>
 </div>
 {% endblock %}

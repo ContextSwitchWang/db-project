@@ -4,17 +4,20 @@
 {{ super() }}
 Login:
 
-<form action="/login" method="get">
+<form action="/login" method="post">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="user_name" />
     </div>
     <div>
-        <label for="mail">E-mail:</label>
-        <input type="email" id="mail" name="user_email" />
+        <label for="pass">Password:</label>
+        <input type="password" id="pass" name="user_pass" />
     </div>
     <div class="button">
         <button type="submit" name="login">Login</button> or<button type="submit" name="guest">continue as a Guest</button>
+        {% if error %}
+        <br>&nbsp;&nbsp;{{ error }}
+        {% endif %}
     </div>
 </form>
 {% endblock %}
