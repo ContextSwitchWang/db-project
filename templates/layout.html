@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+{% block head %}
+{% if css_url %}
+<link href="{{ css_url }}" rel="stylesheet" type="text/css"/>
+{% endif %}
+<title>{% block title %}Hello{% endblock %}</title>
+{% endblock %}
+</head>
+<body>
+{% block content %}
+Hello!<br>
+This is our database project!<br><br>
+{% endblock %}
+
+{% block footer %}
+<br>
+<div>
+	<div style="display: inline-block;padding-left: 500px">
+	{% if teamname %}
+	  By {{ teamname }}<br>
+	{% else %}
+	{% endif %}
+	Worcester Polytechnic Institute
+	</div>
+	<div  style="display: inline-block;position: relative;top:4;">
+	&nbsp;&nbsp;<img src="{{ img_url }}" height="32px">
+	</div>
+</div>
+{% endblock %}
+</body>
