@@ -1,7 +1,8 @@
-from flask import Flask, render_template, url_for, g, request, flash, session, redirect
-import logging
+from flask      import Flask, render_template, url_for, g, request, flash, session, redirect
 from db_logging import log_the_user_in, valid_login
-import pdb
+import          pdb
+import          logging
+import          renderers
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -23,12 +24,10 @@ app.before_request(run_before_request)
 # the App Engine WSGI application server.
 
 @app.route('/')
-def hello():
+def helloLogin():
     if 'username' in session:
-        return render_template('dashboard.html',
-                            user_name=session['username'])
-    return render_template('helloLogin.html',
-                            css_url=url_for('static', filename='login.css'))
+        return redirect(url_for('dashboard'))
+    return renderers.helloLoginRenderer()
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -47,14 +46,16 @@ def login():
         if valid_login(request.form['user_name'], request.form['user_pass']):
             return log_the_user_in(request.form['user_name'])
 
-    return render_template('helloLogin.html',
-                            error=error,
-                            css_url=url_for('static', filename='login.css'))
+    return renderers.helloLoginRenderer(error=error)
+
 @app.route('/logout')
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
-    return redirect(url_for('hello'))
+    return redirect(url_for('helloLogin'))
+
 @app.route('/dashboard')
 def dashboard():
-    pass
+    if 'username' not in session:
+            return redirect(url_for('helloLogin'))
+    return renderers.dashboardRenderer()

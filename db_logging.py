@@ -1,6 +1,6 @@
 import pdb
 import logging
-from flask import Flask, session, redirect, url_for, escape, request, flash, render_template, g
+from flask import Flask, session, redirect, url_for, escape, request, flash, render_template, g, redirect
 # TODO: mv to datastore
 names = {"admin": "123",
 		  "guest": ""}
@@ -8,8 +8,7 @@ names = {"admin": "123",
 def log_the_user_in(user_name):
 	session['username'] = user_name
 	flash('You were successfully logged in')
-	return render_template('dashboard.html',
-							user_name=user_name)
+	return redirect(url_for('dashboard'))
 
 
 def valid_login(user_name, user_pass):
