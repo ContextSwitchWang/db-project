@@ -51,4 +51,3 @@ def usersHandler():
         return redirect(url_for('users'))
     else:
         return renderers.usersRenderer()
-            
