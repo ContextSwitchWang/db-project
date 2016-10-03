@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %} DB Project {% endblock %}
+{% block content %}
+Hello, {{ session.username }}!
+<div>
+<a href="dashboard" style="padding-left: 580px">
+Dashboard
+</a>
+<a href="logout" style="padding-left: 20px">
+Log out
+</a>
+</div>
+<br><br>
+{% endblock %}
+

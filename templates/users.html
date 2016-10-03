@@ -1,0 +1,36 @@
+{% extends "loggedin.html" %}
+{% block title %}View or edit users{% endblock %}
+{% block content %}
+{{ super() }}
+Users:
+<hr>
+{% if users %}
+<table>
+{% for user in users %}
+    <form action="/users" method="post">
+        <tr>
+            {% for field in user %}
+            <td>{{ field }}</td>
+            {% endfor %}
+            <td><button type="submit" name="delete" value="{{ user[0] }}">Delete</button></td>
+        </tr>
+    <form>
+{% endfor %}
+</table>
+{% endif %}
+<br><br>
+Add or Update User:
+<form>
+    <div>
+        <label for="name">name</label>
+        <label for="pass">pass</label>
+        <label for="role">role</label>
+    </div>
+    <div>
+    <input type="text" name="user_name" id="name">
+    <input type="text" name="user_pass" id="pass">
+    <input type="text" name="user_role" id="role">
+    <button type="submit" name="add_user" value="">Update</button>
+    </div>
+</form>
+{% endblock %}
