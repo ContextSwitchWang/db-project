@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from flask                import request, flash
 import logging
 
 
@@ -64,7 +65,7 @@ class User(ndb.Model):
             return None
     @classmethod
     def add(cls, name, user_pass, role):
-        if user != '':
+        if name != '':
                 try:
                     User(id = name,
                      user_pass = user_pass,
@@ -74,5 +75,7 @@ class User(ndb.Model):
                     logging.warning('Error in adding user')
                 else:
                     return True
+        else:
+            logging.info('User_name cannot be empty')
         return False
 
