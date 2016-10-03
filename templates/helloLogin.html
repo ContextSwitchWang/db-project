@@ -14,7 +14,11 @@ Login:
         <input type="password" id="pass" name="user_pass" />
     </div>
     <div class="button">
-        <button type="submit" name="login">Login</button> or<button type="submit" name="guest">continue as a Guest</button>
+        <button type="submit" name="login">Login</button> or
+        <button type="submit" name="guest" onclick="document.getElementById('name').value='';
+                                                    document.getElementById('pass').value='';">
+        continue as a Guest
+        </button>
         {% if error %}
         <br>&nbsp;&nbsp;{{ error }}
         {% endif %}

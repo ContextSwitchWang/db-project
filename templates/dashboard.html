@@ -1,8 +1,9 @@
-{% extends "layout.html" %}
+{% extends "loggedin.html" %}
 {% block title %} DB Project {% endblock %}
 {% block content %}
-Hello, {{ user_name }}!
-	<a href="logout" style="padding-left: 600px">
-	Log out
-</a>
+{{ super() }}
+{% if session.role == "admin" or session.role == "guest" %}
+<a href="users">View or Edit Users</a>
+{% endif %}
 {% endblock %}
+

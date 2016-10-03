@@ -1,8 +1,10 @@
 from flask      import Flask, render_template, url_for, g, request, flash, session, redirect
-from db_login import log_the_user_in, valid_login
+from handlers   import loginHandler, usersHandler
+from user       import User
 import          pdb
 import          logging
 import          renderers
+import          settings
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -14,48 +16,52 @@ wpi_logo='WPI_Inst_Prim_FulClr_Rev.png'
 with app.app_context():
     pass
 
-def run_before_request():
+@app.before_request
+def staticResourcesSetup():
     g.wpi_logo_url = url_for('static', filename=wpi_logo)
     g.teamname = "Team Awesome"
 
-app.before_request(run_before_request)
+@app.before_request
+def checkPrivilege():
+    if request.path[0:7] == '/static':
+        logging.info('Static resources access allowed')
+        return
+    if request.path in {'/login'
+                        }:
+        logging.info('Login allowed')
+        return
+
+    if 'username' not in session:
+        logging.warning('Unauthorized access attemped!')
+        return renderers.helloLoginRenderer()
 
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
-
-@app.route('/')
-def helloLogin():
-    if 'username' in session:
-        return redirect(url_for('dashboard'))
-    return renderers.helloLoginRenderer()
 
 @app.errorhandler(404)
 def page_not_found(e):
     """Return a custom 404 error."""
     return render_template('404.html'), 404
 
+@app.route('/')
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    logging.info("Login Attempt with: ")
-    logging.info(request)
-    logging.info(request.form)
-    error = 'Invalid username/password'
-    if request.method == 'POST':
-        if request.form.has_key('guest'):
-            return log_the_user_in('guest')
-        if valid_login(request.form['user_name'], request.form['user_pass']):
-            return log_the_user_in(request.form['user_name'])
-
-    return renderers.helloLoginRenderer(error=error)
+    return loginHandler()
 
 @app.route('/logout')
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
-    return redirect(url_for('helloLogin'))
+    logging.info('User logged out')
+    return renderers.helloLoginRenderer()
 
 @app.route('/dashboard')
 def dashboard():
-    if 'username' not in session:
-            return redirect(url_for('helloLogin'))
     return renderers.dashboardRenderer()
+
+@app.route('/users', methods=['POST', 'GET'])
+def users():
+    if not settings.ACLUsers(session['role']):
+        flash('You are not authorized to view this page')
+        return renderers.dashboardRenderer()
+    return usersHandler()
