@@ -1,9 +1,6 @@
 <!doctype html>
 <head>
 {% block head %}
-{% if css_url %}
-<link href="{{ css_url }}" rel="stylesheet" type="text/css"/>
-{% endif %}
 <title>{% block title %}Hello{% endblock %}</title>
 {% endblock %}
 </head>
@@ -45,5 +42,8 @@ This is our database project!<br><br>
 	&nbsp;&nbsp;<img src="{{ g.wpi_logo_url }}" height="32px">
 	</div>
 </div>
+{% if css_url %}
+<link href="{{ css_url }}" rel="stylesheet" type="text/css"/>
+{% endif %}
 {% endblock %}
 </body>

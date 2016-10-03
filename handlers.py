@@ -41,16 +41,10 @@ def usersHandler():
         elif request.form.has_key('add_user'):
             user = request.form['user_name']
             logging.info('Add user ' + user + ' initiated')
-            if user != '':
-                try:
-                    User(id = user, 
-                     user_pass = request.form['user_pass'],
-                     role = request.form['user_role']).put()
-                except Exception as e:
-                    logging.warning(e)
-                    error = 'Add user error'
-            else:
-                error = 'user_name is empty'
+            if not User.add(user,
+                     request.form['user_pass'],
+                     request.form['user_role']):
+                error = 'Add user failed'
         if error:
             logging.warning(error)
             flash(error)

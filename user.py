@@ -37,7 +37,7 @@ class User(ndb.Model):
             logging.info('user listing:')
             logging.info(users)
             return [(user.key.id(), user.user_pass, user.role) for user in users] + [("dommy", "1234556", 'dommy')]
-        
+
 
     @classmethod
     def verify(cls, name, user_pass):
@@ -58,7 +58,21 @@ class User(ndb.Model):
         user = User.getUser(name)
         if user:
             user.key.delete()
+            logging.info("User deleted")
             return True
         else:
             return None
-        
+    @classmethod
+    def add(cls, name, user_pass, role):
+        if user != '':
+                try:
+                    User(id = name,
+                     user_pass = user_pass,
+                     role = role).put()
+                except Exception as e:
+                    logging.warning(e)
+                    logging.warning('Error in adding user')
+                else:
+                    return True
+        return False
+

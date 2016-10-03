@@ -2,6 +2,9 @@
 {% block title %}View or edit users{% endblock %}
 {% block content %}
 {{ super() }}
+
+
+<br><br>
 Users:
 <hr>
 {% if users %}
@@ -12,7 +15,7 @@ Users:
             {% for field in user %}
             <td>{{ field }}</td>
             {% endfor %}
-            <td><button type="submit" name="delete" value="{{ user[0] }}">Delete</button></td>
+            <td><button type="button" name="delete" value="{{ user[0] }}" class="delete">Delete</button></td>
         </tr>
     <form>
 {% endfor %}
@@ -20,7 +23,7 @@ Users:
 {% endif %}
 <br><br>
 Add or Update User:
-<form>
+<form action="/users" method="post">
     <div>
         <label for="name">name</label>
         <label for="pass">pass</label>
@@ -33,4 +36,42 @@ Add or Update User:
     <button type="submit" name="add_user" value="">Update</button>
     </div>
 </form>
+<script type="text/javascript">
+window.addEventListener("load", function () {
+    function sendData(user) {
+        var XHR = new XMLHttpRequest();
+
+        // We bind the FormData object and the form element
+        var FD  = new FormData();
+
+        FD.append('delete', user);
+
+        // We define what will happen if the data are successfully sent
+        XHR.addEventListener("load", function(event) {
+
+        });
+
+        // We define what will happen in case of error
+        XHR.addEventListener("error", function(event) {
+
+        });
+
+        // We setup our request
+        XHR.open("POST", "/users");
+
+        // The data sent are the one the user provide in the form
+        XHR.send(FD);
+    }
+
+    // We need to access the form element
+    collections = document.getElementsByClassName("delete");
+    [].forEach.call(collections, function (button) {
+        button.addEventListener("click", function (event) {
+            sendData(button.getAttribute('value'));
+      });
+    })
+
+
+});
+</script>
 {% endblock %}
