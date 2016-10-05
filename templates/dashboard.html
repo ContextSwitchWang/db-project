@@ -2,7 +2,7 @@
 {% block title %} DB Project {% endblock %}
 {% block content %}
 {{ super() }}
-{% if session.role == "admin" or session.role == "guest" %}
+{% if users %}
 <a href="users">View or Edit Users</a>
 {% endif %}
 {% endblock %}

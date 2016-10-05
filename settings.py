@@ -1,2 +1,2 @@
 def ACLUsers(role):
-	return role == 'admin' or role == 'guest'
+	return role in ['admin']
