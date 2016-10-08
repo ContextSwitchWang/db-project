@@ -15,10 +15,12 @@ Login:
     </div>
     <div class="button">
         <button type="submit" name="login">Login</button> or
+      	{% if guest %}
         <button type="submit" name="guest" onclick="document.getElementById('name').value='';
                                                     document.getElementById('pass').value='';">
         continue as a Guest
         </button>
+      	{% endif %}
         {% if error %}
         <br>&nbsp;&nbsp;{{ error }}
         {% endif %}
