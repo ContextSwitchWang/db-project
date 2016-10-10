@@ -12,9 +12,19 @@ Users:
 {% for user in users %}
     <form action="/users" method="post">
         <tr>
-            {% for field in user %}
-            <td>{{ field }}</td>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>
+            {% set comma = joiner(",") %}
+            {% for field in user[2] %}
+            {% if not loop.last %}
+            {{ field }},
+            {% endif %}
+            {% if loop.last %}
+            {{ field }}
+            {% endif %}
             {% endfor %}
+            </td>
             <td><button type="button" name="delete" value="{{ user[0] }}" class="delete">Delete</button></td>
         </tr>
     <form>
@@ -34,6 +44,20 @@ Add or Update User:
     <input type="text" name="user_pass" id="pass">
     <input type="text" name="user_role" id="role">
     <button type="submit" name="add_user" value="">Update</button>
+    </div>
+</form>
+<br><br>
+
+Add Role to User:
+<form action="/users" method="post">
+    <div>
+        <label for="name">name</label>
+        <label for="role">role</label>
+    </div>
+    <div>
+    <input type="text" name="user_name" id="name">
+    <input type="text" name="user_role" id="role">
+    <button type="submit" name="add_role" value="">Add</button>
     </div>
 </form>
 <script type="text/javascript">

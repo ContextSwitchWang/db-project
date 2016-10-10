@@ -1,10 +1,8 @@
 from flask      import Flask, render_template, url_for, g, request, flash, session, redirect
 from handlers   import loginHandler, usersHandler
-from user       import User
 import          pdb
 import          logging
 import          renderers
-import          settings
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -52,6 +50,7 @@ def login():
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
+    session.pop('roles', None)
     logging.info('User logged out')
     return renderers.helloLoginRenderer()
 
@@ -61,7 +60,4 @@ def dashboard():
 
 @app.route('/users', methods=['POST', 'GET'])
 def users():
-    if not settings.ACLUsers(session['role']):
-        flash('You are not authorized to view this page')
-        return renderers.dashboardRenderer()
     return usersHandler()

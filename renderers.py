@@ -12,7 +12,7 @@ def helloLoginRenderer(**kwargs):
 def dashboardRenderer():
 
     return render_template('dashboard.html',
-    						users=settings.ACLUsers(session['role']))
+    						users=settings.ACLUsers(session['username'], session['roles']))
 
 def usersRenderer():
     users = User.getAllUsers()
