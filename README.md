@@ -1,7 +1,9 @@
-## Python Flask Skeleton for Google App Engine
+##Database Project: Supply Chain Management
 
-![status: inactive](https://img.shields.io/badge/status-inactive-red.svg)
+A web application for online supply chain management hosted on [App Engine](t-scarab-714.appspot.com).
+See the below for how to run it.
 
+##Python Flask Skeleton for Google App Engine
 
 A skeleton for building Python applications on Google App Engine with the
 [Flask micro framework](http://flask.pocoo.org).
