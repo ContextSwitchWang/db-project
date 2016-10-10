@@ -1,6 +1,6 @@
 ##Database Project: Supply Chain Management
 
-A web application for online supply chain management hosted on [App Engine](t-scarab-714.appspot.com).
+A web application for online supply chain management hosted on [App Engine](https://t-scarab-714.appspot.com).
 See the below for how to run it.
 
 ##Python Flask Skeleton for Google App Engine
