@@ -19,7 +19,8 @@ def loginHandler():
             flash('You were successfully logged in')
             return redirect(url_for('dashboard'))
         else:
-            return renderers.helloLoginRenderer(error=error)
+            flash(error)
+            return renderers.helloLoginRenderer(error=None)
     else:
         return renderers.helloLoginRenderer()
 
