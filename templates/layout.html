@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.pink-indigo.min.css"/>
-      <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
       <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
     {% endif %}
     <title>{% block title %}Hello{% endblock %}</title>
@@ -13,7 +13,7 @@
 </head>
 <body>
   <div class="mdl-layout mdl-js-layout">
-  <main class="mdl-layout__content">
+  <main class="mdl-layout__content" id="layout-main">
 
     {% block content %}
     {% endblock %}
@@ -27,7 +27,7 @@
       {% endif %}
     {% endwith %}
     {% block footer %}
-      <footer class="mdl-mini-footer">
+      <footer class="mdl-mini-footer" id="layout-footer">
         <div class="mdl-mini-footer__left-section">
           <ul class="mdl-mini-footer__link-list">
             <li><a href="#">Help</a></li>
@@ -48,7 +48,15 @@
   </main>
   </div>
 
-  
+  <style>
+  /* Change the layout__content class to Flex (instead of inline-block) to allow spacer to work. */
+  .mdl-layout__content {
+    display: -webkit-flex;
+	display: flex;
+    -webkit-flex-direction: column;
+	        flex-direction: column;
+  }
+  </style>
   {% if css_url %}
     <link href="{{ css_url }}" rel="stylesheet" type="text/css"/>
   {% endif %}

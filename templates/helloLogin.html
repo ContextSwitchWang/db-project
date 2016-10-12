@@ -1,24 +1,33 @@
 {% extends "layout.html" %}
 {% block title %}Login{% endblock %}
-{% block content %} 
+{% block content %}
+
+<div id="login-main" class="parent-div">
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--8-col mdl-cell--2-offset-desktop">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
       <h6>Hello!<br>This is our database project!</h6>
     </div>
 </div>
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--8-col mdl-cell--2-offset-desktop">
         <form action="/login" method="post">
+        	<div class="mdl-grid">
+        	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
             <div class="mdl-textfield mdl-js-textfield">
                 <label class="mdl-textfield__label" for="name">Name:</label>
                 <input class="mdl-textfield__input" type="text" id="name" name="user_name" />
             </div>
+            </div>
+            </div>
+            <div class="mdl-grid">
+        	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
             <div class="mdl-textfield mdl-js-textfield">
                 <label class="mdl-textfield__label" for="pass">Password:</label>
                 <input class="mdl-textfield__input" type="password" id="pass" name="user_pass" />
                 <span class="mdl-textfield__error">Input is not valid</span>
             </div>
-            <div class="mdl-layout-spacer"></div>
+            </div>
+            </div>
+           	<div class="mdl-grid">
+           	<div class="mdl-cell mdl-cell--6-col  mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
             <div class="button">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" type="submit" name="login">Login</button>
                 {% if guest %}
@@ -32,16 +41,24 @@
                 <br>&nbsp;&nbsp;{{ error }}
                 {% endif %}
             </div>
-    </form>
-    </div>
+            </div>
+            </div>
+    	</form>
+<br>
+<br>
 </div>
-
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col">
-    </div>
-</div>
-<div class="page-content">
-
-</div>
-<div class="mdl-layout-spacer"></div>
+<div id="login-spacer"  class="mdl-layout-spacer"></div>
+<script type="text/javascript">
+ document.addEventListener("DOMContentLoaded", function() {
+    var sp = document.getElementById("login-spacer");
+    var d = document.getElementById("login-main");
+    d.style.height = d.offsetHeight + sp.offsetHeight + "px";
+  });
+</script>
+<style>
+.mdl-button{
+	margin-top: 0.5em;
+	margin-right: 0.5em;
+}
+</style>
 {% endblock %}
