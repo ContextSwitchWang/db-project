@@ -2,29 +2,64 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 {{ super() }}
-Login:
+<div id="login-main" class="parent-div page-content">
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+      <h6>Awemome Supply Chain Management</h6>
+      <p>Welcome to your refined supply chain management experience</p>
+    </div>
+</div>
+    <form action="/login" method="post">
+        <div class="mdl-grid">
+        	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="name">Name:</label>
+                <input class="mdl-textfield__input" type="text" id="name" name="user_name" />
+            </div>
+            </div>
+        </div>
+        <div class="mdl-grid">
+        	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="pass">Password:</label>
+                <input class="mdl-textfield__input" type="password" id="pass" name="user_pass" />
+                <span class="mdl-textfield__error">Input is not valid</span>
+            </div>
+            </div>
+        </div>
+        <div class="mdl-grid">
+           	<div class="mdl-cell mdl-cell--6-col  mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+            <div class="button">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="submit" name="login">Login</button>
+                {% if guest %}
 
-<form action="/login" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="user_name" />
-    </div>
-    <div>
-        <label for="pass">Password:</label>
-        <input type="password" id="pass" name="user_pass" />
-    </div>
-    <div class="button">
-        <button type="submit" name="login">Login</button>
-        {% if guest %}
-        or
-        <button type="submit" name="guest" onclick="document.getElementById('name').value='';
-                                                    document.getElementById('pass').value='';">
-        continue as a Guest
-        </button>
-      	{% endif %}
-        {% if error %}
-        <br>&nbsp;&nbsp;{{ error }}
-        {% endif %}
-    </div>
-</form>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="submit" name="guest" onclick="document.getElementById('name').value='';
+                                                            document.getElementById('pass').value='';">
+                continue as a Guest
+                </button>
+              	{% endif %}
+                {% if error %}
+                <br>&nbsp;&nbsp;<h6>{{ error }}</h6>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+    </form>
+<br>
+<br>
+</div>
+<div id="login-spacer"  class="mdl-layout-spacer"></div>
+<script type="text/javascript">
+ document.addEventListener("DOMContentLoaded", function() {
+    var sp = document.getElementById("login-spacer");
+    var d = document.getElementById("login-main");
+    d.style.height = d.offsetHeight + sp.offsetHeight + "px";
+  });
+</script>
+<style>
+.mdl-button{
+	margin-top: 0.5em;
+	margin-right: 0.5em;
+}
+</style>
 {% endblock %}

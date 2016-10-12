@@ -45,7 +45,7 @@ def usersHandler():
             user = request.form['user_name']
             logging.info('Add role to user ' + user + ' initiated')
             if not User.addRole(user,
-                     [request.form['user_role']]):
+                     {request.form['user_role']}):
                 error = 'Add user role failed'
         if error:
             logging.warning(error)
