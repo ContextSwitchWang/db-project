@@ -1,65 +1,106 @@
 {% extends "loggedin.html" %}
 {% block title %}View or edit users{% endblock %}
-{% block content %}
-{{ super() }}
+{% block pagecontent %}
 
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
+    <h6>Users:</h6>
+    </div>
+</div>
+<div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col">Name</div>
+        <div class="mdl-cell mdl-cell--2-col">Password</div>
+        <div class="mdl-cell mdl-cell--2-col">Role</div>
+</div>
+<div class="mdl-grid">
+<div class="mdl-cell mdl-cell--12-col">
+    {% if users %}
+    {% for user in users %}
+        <form action="/users" method="post">
+        <div class="mdl-grid mdl-grid--no-spacing">
+                <div class="mdl-cell mdl-cell--2-col">{{ user[0] }}</div>
+                <div class="mdl-cell mdl-cell--2-col">{{ user[1] }}</div>
+                <div class="mdl-cell mdl-cell--2-col">
+                {% set comma = joiner(",") %}
+                {% for field in user[2] %}
+                {% if not loop.last %}
+                {{ field }},
+                {% endif %}
+                {% if loop.last %}
+                {{ field }}
+                {% endif %}
+                {% endfor %}
+                </div>
+                <div class="mdl-cell mdl-cell--4-col">
+                    <button class="mdl-button mdl-js-button mdl-button--accent button-small delete" type="button" name="delete" value="{{ user[0] }}">Delete
+                    </button>
+                </div>
+        </div>
+        </form>
+
+    {% endfor %}
+    {% endif %}
+</div>
+</div>
+<br><br>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
+        <h6>Add or Update User:</h6>
+    </div>
+</div>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+        <form action="/users" method="post">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="name">name</label>
+                <input class="mdl-textfield__input" type="text" name="user_name" id="name">
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="pass">pass</label>
+                <input class="mdl-textfield__input" type="text" name="user_pass" id="pass">
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="role">role</label>
+                <input class="mdl-textfield__input" type="text" name="user_role" id="role">
+            </div>
+            <div>
+            <button  class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" type="submit" name="add_user" value="">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <br><br>
-Users:
-<hr>
-{% if users %}
-<table>
-{% for user in users %}
-    <form action="/users" method="post">
-        <tr>
-            <td>{{ user[0] }}</td>
-            <td>{{ user[1] }}</td>
-            <td>
-            {% set comma = joiner(",") %}
-            {% for field in user[2] %}
-            {% if not loop.last %}
-            {{ field }},
-            {% endif %}
-            {% if loop.last %}
-            {{ field }}
-            {% endif %}
-            {% endfor %}
-            </td>
-            <td><button type="button" name="delete" value="{{ user[0] }}" class="delete">Delete</button></td>
-        </tr>
-    <form>
-{% endfor %}
-</table>
-{% endif %}
-<br><br>
-Add or Update User:
-<form action="/users" method="post">
-    <div>
-        <label for="name">name</label>
-        <label for="pass">pass</label>
-        <label for="role">role</label>
-    </div>
-    <div>
-    <input type="text" name="user_name" id="name">
-    <input type="text" name="user_pass" id="pass">
-    <input type="text" name="user_role" id="role">
-    <button type="submit" name="add_user" value="">Update</button>
-    </div>
-</form>
-<br><br>
 
-Add Role to User:
-<form action="/users" method="post">
-    <div>
-        <label for="name">name</label>
-        <label for="role">role</label>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
+        <h6>Add Role to User:</h6>
     </div>
-    <div>
-    <input type="text" name="user_name" id="name">
-    <input type="text" name="user_role" id="role">
-    <button type="submit" name="add_role" value="">Add</button>
+</div>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+        <form action="/users" method="post">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="rname">name</label>
+                <input class="mdl-textfield__input" type="text" name="user_name" id="rname">
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="rrole">role</label>
+                <input class="mdl-textfield__input" type="text" name="user_role" id="rrole">
+            </div>
+            <div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" type="submit" name="add_role" value="">Add</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
+<style type="text/css">
+.mdl-button{
+    line-height: 20px;
+    height: 20px;
+}
+</style>
+
 <script type="text/javascript">
 window.addEventListener("load", function () {
     function sendData(user) {

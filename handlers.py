@@ -19,8 +19,7 @@ def loginHandler():
             flash('You were successfully logged in')
             return redirect(url_for('dashboard'))
         else:
-            flash(error)
-            return renderers.helloLoginRenderer(error=None)
+            return renderers.helloLoginRenderer(error=error)
     else:
         return renderers.helloLoginRenderer()
 
@@ -46,7 +45,7 @@ def usersHandler():
             user = request.form['user_name']
             logging.info('Add role to user ' + user + ' initiated')
             if not User.addRole(user,
-                     [request.form['user_role']]):
+                     {request.form['user_role']}):
                 error = 'Add user role failed'
         if error:
             logging.warning(error)

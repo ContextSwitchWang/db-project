@@ -74,7 +74,7 @@ class User(ndb.Model):
     def addRole(cls, name, roles):
         user = User.getUser(name)
         if user:
-            user.roles += roles
+            user.roles = list(roles.union(user.roles))
             try:
                 user.put()
             except Exception as e:

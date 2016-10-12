@@ -4,7 +4,7 @@
     {% if mdl %}
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.pink-indigo.min.css"/>
+      <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css"/>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
       <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
     {% endif %}
@@ -12,18 +12,19 @@
   {% endblock %}
 </head>
 <body>
-  <div class="mdl-layout mdl-js-layout">
-  <main class="mdl-layout__content" id="layout-main">
-
-    {% block content %}
-    {% endblock %}
+  {% block content %}
+    <div class="mdl-layout mdl-js-layout">
+    <main class="mdl-layout__content" id="layout-main">
+  {% endblock %}
     {% with messages = get_flashed_messages() %}
      {% if messages %}
-        <ul class="flashes">
+        <div class="mdl-grid">
           {% for message in messages %}
-           <div class="message_flash">{{ message }}</div>
+            <div class="message_flash mdl-cell mdl-cell--12-col">
+              <h6>{{ message }}<h6>
+            </div>
           {% endfor %}
-        </ul>
+        </div>
       {% endif %}
     {% endwith %}
     {% block footer %}
@@ -38,7 +39,7 @@
         <div class="mdl-mini-footer__right-section">
           <div class="mdl-logo">
             By {{ g.teamname }}
-          </div> 
+          </div>
           <ul class="mdl-mini-footer__link-list">
             <img src="{{ g.wpi_logo_url }}" height="32px">
           </ul>
@@ -49,6 +50,9 @@
   </div>
 
   <style>
+  footer{
+    margin-top: 2em;
+  }
   /* Change the layout__content class to Flex (instead of inline-block) to allow spacer to work. */
   .mdl-layout__content {
     display: -webkit-flex;
@@ -61,7 +65,7 @@
     <link href="{{ css_url }}" rel="stylesheet" type="text/css"/>
   {% endif %}
   <script type="text/javascript">
-        window.setTimeout(function() {
+          window.setTimeout(function() {
         var l = document.getElementsByClassName("message_flash");
         if (l.length > 0) {
           l[0].style.display='none'
