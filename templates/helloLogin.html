@@ -9,7 +9,7 @@
       <p>Welcome to your refined supply chain management experience</p>
     </div>
 </div>
-    <form action="/login" method="post">
+    <form action="/login" method="post" class="update-form">
         <div class="mdl-grid">
         	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
             <div class="mdl-textfield mdl-js-textfield">
@@ -30,11 +30,10 @@
         <div class="mdl-grid">
            	<div class="mdl-cell mdl-cell--6-col  mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
             <div class="button">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="submit" name="login">Login</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" name="login">Login</button>
                 {% if guest %}
 
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="submit" name="guest" onclick="document.getElementById('name').value='';
-                                                            document.getElementById('pass').value='';">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" name="guest">
                 continue as a Guest
                 </button>
               	{% endif %}
@@ -50,11 +49,24 @@
 </div>
 <div id="login-spacer"  class="mdl-layout-spacer"></div>
 <script type="text/javascript">
- document.addEventListener("DOMContentLoaded", function() {
-    var sp = document.getElementById("login-spacer");
-    var d = document.getElementById("login-main");
-    d.style.height = d.offsetHeight + sp.offsetHeight + "px";
-  });
+    window.addEventListener("load", function () {
+        var sp = document.getElementById("login-spacer");
+        var d = document.getElementById("login-main");
+        d.style.height = d.offsetHeight + sp.offsetHeight + "px";
+    
+        var form = document.getElementsByClassName("update-form")[0];
+        var buttons = form.getElementsByTagName('button')
+        buttons[0].addEventListener("click", function (event) {
+                sendData($(form).serializeArray(), function () {
+                    window.location.replace('/dashboard');
+                }, '/login');
+        });
+        buttons[1].addEventListener("click", function (event) {
+                sendData({'user_name': 'guest', 'user_pass':''}, function () {
+                    window.location.replace('/dashboard');
+                },'/login');
+        });
+    });
 </script>
 <style>
 .mdl-button{

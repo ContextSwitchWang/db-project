@@ -1,16 +1,46 @@
 {% extends "loggedin.html" %}
-{% block title %}View or edit users{% endblock %}
+{% block title %}View or edit Privileges{% endblock %}
 {% block pagecontent %}
 
+
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col">
-    <h6>Users:</h6>
-    </div>
+<div class="mdl-cell mdl-cell--12-col">
+    {% if settings %}
+    {% for setting in settings %}
+        <div class="mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--4-col">
+            <h6>{{ setting[0] }}</h6>
+            </div>
+        </div>
+        <div class="mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+            Users:
+            {% for u in setting[1] %}
+                {% if not loop.last %}
+                        {{ u }},
+                {% endif %}
+                {% if loop.last %}
+                        {{ u }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+        <div class="mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+            Roles:
+            {% for u in setting[2] %}
+                {% if not loop.last %}
+                        {{ u }},
+                {% endif %}
+                {% if loop.last %}
+                        {{ u }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
 </div>
-<div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--2-col">Name</div>
-        <div class="mdl-cell mdl-cell--2-col">Password</div>
-        <div class="mdl-cell mdl-cell--2-col">Role</div>
 </div>
 <div class="mdl-grid">
 <div class="mdl-cell mdl-cell--12-col">
@@ -45,27 +75,23 @@
 <br><br>
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col">
-        <h6>Add or Update User:</h6>
+        <h6>Add or Delete User:</h6>
     </div>
 </div>
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
         <form action="/users" method="post" class="update-form">
             <div class="mdl-textfield mdl-js-textfield">
-                <label class="mdl-textfield__label" for="name">name</label>
+                <label class="mdl-textfield__label" for="name">privilege</label>
                 <input class="mdl-textfield__input" type="text" name="user_name" id="name">
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-                <label class="mdl-textfield__label" for="pass">pass</label>
+                <label class="mdl-textfield__label" for="pass">user</label>
                 <input class="mdl-textfield__input" type="text" name="user_pass" id="pass">
-            </div>
-            <div class="mdl-textfield mdl-js-textfield">
-                <label class="mdl-textfield__label" for="role">role</label>
-                <input class="mdl-textfield__input" type="text" name="user_role" id="role">
             </div>
             <input type="hidden" name="add_user" value="">
             <div>
-            <button  class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect update" type="button" >Update</button>
+            <button  class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect update" type="button" >Add</button>
             </div>
         </form>
     </div>
@@ -75,14 +101,14 @@
 
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col">
-        <h6>Add or Delete Role to User:</h6>
+        <h6>Add or Delete Role:</h6>
     </div>
 </div>
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
         <form action="/users" method="post" class="update-form">
             <div class="mdl-textfield mdl-js-textfield">
-                <label class="mdl-textfield__label" for="rname">name</label>
+                <label class="mdl-textfield__label" for="rname">privilege</label>
                 <input class="mdl-textfield__input" type="text" name="user_name" id="rname">
             </div>
             <div class="mdl-textfield mdl-js-textfield">

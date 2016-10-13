@@ -1,7 +1,12 @@
 from google.appengine.ext import ndb
 from flask                import request, flash, session
 import logging
+from settings             import Settings
 import settings
+
+"""
+Referenced from handlers.py renderers.py
+"""
 
 # Let's make it top level for now
 class User(ndb.Model):
@@ -41,24 +46,29 @@ class User(ndb.Model):
 
 
     @classmethod
-    def verify(cls, name, user_pass):
+    def verifyAndLogin(cls, name, user_pass):
         logging.info('User Verification')
         if name == settings.dev_name and user_pass == settings.dev_pass:
             logging.warning('Login via Hardcoded developer account')
-            session['username'] = name
             session['roles'] = settings.dev_role
-            return True
-        user = cls.getUser(name)
-        if user:
-            logging.info("pass is: " + str(user.user_pass))
-            if user.user_pass == user_pass:
-                logging.info('Verified')
-                session['username'] = name
-                session['roles'] = user.roles
-                return True
+        else:
+            user = cls.getUser(name)
+            if user:
+                logging.info("pass is: " + str(user.user_pass))
+                if user.user_pass == user_pass:
+                    logging.info('Verified')
+                    session['roles'] = user.roles
+                else:
+                    logging.info('False Login Attempt!')
+                    return False
             else:
-                logging.info('False Login Attempt!')
+                logging.info('User name not found')
                 return False
+        session['username'] = name
+        Settings.setPrivileges(name, session['roles'])
+        return True
+
+
 
 
     @classmethod
@@ -67,9 +77,10 @@ class User(ndb.Model):
         if user:
             user.key.delete()
             logging.info("User deleted")
-            return True
-        else:
             return None
+        else:
+            logging.warning('Deletion Aborted because user is not found')
+            return 'Deletion Aborted because user is not found'
     @classmethod
     def addRole(cls, name, roles):
         user = User.getUser(name)
@@ -80,11 +91,12 @@ class User(ndb.Model):
             except Exception as e:
                 logging.warning(e)
                 logging.warning('Error in adding user role')
+                return 'Error in adding user role'
             else:
                 logging.info("User Role Added")
-                return True
-
-        return None
+                return None
+        else:
+            return "User doesn't exist"
     @classmethod
     def add(cls, name, user_pass, roles):
         if name != '':
@@ -95,9 +107,10 @@ class User(ndb.Model):
                 except Exception as e:
                     logging.warning(e)
                     logging.warning('Error in adding user')
+                    return'Error in adding user'
                 else:
-                    return True
+                    return None
         else:
             logging.info('User_name cannot be empty')
-        return False
+            return 'User_name cannot be empty'
 

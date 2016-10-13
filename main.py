@@ -1,18 +1,20 @@
 from flask      import Flask, render_template, url_for, g, request, flash, session, redirect
-from handlers   import loginHandler, usersHandler
+from settings   import Settings
 import          pdb
 import          logging
 import          renderers
+import          handlers
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.secret_key = '\xe8\xadI\ni\x89\xe7_\xbb\x9a\x02=\xeb\xd2|\xa5T5\xb8Q\x18Vw\xa2'
-
+privilege_strings = {'usermanage', 'privilegemanage'}
 #TODO: mv to google storage
 wpi_logo='WPI_Inst_Prim_FulClr_Rev.png'
 
+
 with app.app_context():
-    pass
+    Settings.initPrivileges(privilege_strings)
 
 @app.before_request
 def staticResourcesSetup():
@@ -44,13 +46,15 @@ def page_not_found(e):
 @app.route('/')
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    return loginHandler()
+    return handlers.loginHandler()
 
 @app.route('/logout')
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
     session.pop('roles', None)
+    for x in privilege_strings:
+        session.pop(x, None)
     logging.info('User logged out')
     return renderers.helloLoginRenderer()
 
@@ -60,4 +64,8 @@ def dashboard():
 
 @app.route('/users', methods=['POST', 'GET'])
 def users():
-    return usersHandler()
+    return handlers.usersHandler()
+
+@app.route('/privileges', methods=['POST', 'GET'])
+def privileges():
+    return handlers.privilegesHandler()

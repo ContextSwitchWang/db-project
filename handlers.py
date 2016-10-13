@@ -2,8 +2,8 @@ from flask      import request, flash, redirect, url_for, session
 from user       import User
 import logging
 import renderers
-import          settings
-
+from settings import          Settings
+import pdb
 
 def loginHandler():
     if request.method == 'POST':
@@ -13,18 +13,17 @@ def loginHandler():
         error = 'Invalid username/password'
         user_name = request.form['user_name']
         user_pass = request.form['user_pass']
-        if request.form.has_key('guest'):
-            user_name = 'guest'
-        if User.verify(user_name, user_pass):
-            flash('You were successfully logged in')
-            return redirect(url_for('dashboard'))
+        if User.verifyAndLogin(user_name, user_pass):
+            return 'successful'
         else:
-            return renderers.helloLoginRenderer(error=error)
+            return 'invalid login/password'
     else:
         return renderers.helloLoginRenderer()
 
 def usersHandler():
-    if not settings.ACLUsers(session['username'], session['roles']):
+    # make it more secure by checking
+    if not Settings.checkPrivilege(session['username'], session['roles'], 'usermanage'):
+        session['usermanage'] = False
         flash('You are not authorized to view this page')
         return renderers.dashboardRenderer()
     if request.method == 'POST':
@@ -32,24 +31,49 @@ def usersHandler():
         if request.form.has_key('delete'):
             user = request.form['delete']
             logging.info('Deletion of ' + user + ' initiated')
-            if not User.delete(user):
-                error = 'Deletion Aborted because user is not found'
+            error = User.delete(user)
         elif request.form.has_key('add_user'):
             user = request.form['user_name']
             logging.info('Add user ' + user + ' initiated')
-            if not User.add(user,
+            error = User.add(user,
                      request.form['user_pass'],
-                     [request.form['user_role']]):
-                error = 'Add user failed'
+                     [request.form['user_role']])
         elif request.form.has_key('add_role'):
             user = request.form['user_name']
             logging.info('Add role to user ' + user + ' initiated')
-            if not User.addRole(user,
-                     {request.form['user_role']}):
-                error = 'Add user role failed'
+            error = User.addRole(user,
+                     {request.form['user_role']})
         if error:
             logging.warning(error)
-            flash(error)
-        return redirect(url_for('users'))
+            return error
+        return 'successful'
+        #return redirect(url_for('users'))
     else:
         return renderers.usersRenderer()
+def privilegesHandler():
+    if not Settings.checkPrivilege(session['username'], session['roles'], 'privilegemanage'):
+        session['privilegemanage'] = False
+        flash('You are not authorized to view this page')
+        return renderers.dashboardRenderer()
+    if request.method == 'POST':
+        error = None
+        if request.form.has_key('delete'):
+            pass
+        elif request.form.has_key('add_user'):
+            user = request.form['user_name']
+            logging.info('Add user ' + user + ' initiated')
+            error = Settings.addUserAndRoles(user,
+                    {request.form['user_pass']},
+                    set())
+        elif request.form.has_key('add_role'):
+            user = request.form['user_name']
+            logging.info('Add role to user ' + user + ' initiated')
+            error = Settings.addUserAndRoles(user,
+                    set(),
+                    {request.form['user_role']})
+        if error:
+            logging.warning(error)
+            return error
+        else:
+            return 'successful'
+    return renderers.privilegeRenderer()

@@ -2,7 +2,7 @@
 {% block title %} DB Project {% endblock %}
 {% block pagecontent %}
     	<div class="mdl-grid">
-	    	{% if users %}
+	    	{% if session.usermanage %}
 	    	<div class="mdl-cell mdl-cell--4-col">
 				<div class="demo-card-square mdl-card mdl-shadow--2dp">
 				  <div class="mdl-card__title mdl-card--expand">
@@ -14,6 +14,23 @@
 				  <div class="mdl-card__actions mdl-card--border">
 				    <a href="users" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
 				      View or Edit Users
+				    </a>
+				  </div>
+				</div>
+			</div>
+			{% endif %}
+			{% if session.privilegemanage %}
+	    	<div class="mdl-cell mdl-cell--4-col">
+				<div class="demo-card-square mdl-card mdl-shadow--2dp">
+				  <div class="mdl-card__title mdl-card--expand">
+				    <h2 class="mdl-card__title-text">Privilege Management</h2>
+				  </div>
+				  <div class="mdl-card__supporting-text">
+				    You can decide what each role and/or user can do here.
+				  </div>
+				  <div class="mdl-card__actions mdl-card--border">
+				    <a href="privileges" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+				      Edit Privileges
 				    </a>
 				  </div>
 				</div>

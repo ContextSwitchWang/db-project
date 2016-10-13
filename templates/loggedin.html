@@ -20,9 +20,13 @@
     <nav class="mdl-navigation">
      <a href="dashboard" class="mdl-navigation__link">Dashboard</a>
 
-    {% if users %}
+    {% if session.usermanage %}
        	<a href="users" class="mdl-navigation__link">View or Edit Users</a>
     {% endif %}
+    {% if session.privilegemanage %}
+       	<a href="privileges" class="mdl-navigation__link">Edit Privileges</a>
+    {% endif %}
+
 	    <a href="logout" class="mdl-navigation__link">Log out</a>
     </nav>
   </div>
@@ -33,6 +37,5 @@
   {% endblock %}
     </div>
 	<div class="mdl-layout-spacer"></div>
-
 {% endblock %}
 
