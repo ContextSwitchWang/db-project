@@ -98,6 +98,22 @@ class User(ndb.Model):
         else:
             return "User doesn't exist"
     @classmethod
+    def delRole(cls, name, roles):
+        user = User.getUser(name)
+        if user:
+            user.roles = list(set(user.roles).difference(roles))
+            try:
+                user.put()
+            except Exception as e:
+                logging.warning(e)
+                logging.warning('Error in adding user role')
+                return 'Error in adding user role'
+            else:
+                logging.info("User Role Added")
+                return None
+        else:
+            return "User doesn't exist"
+    @classmethod
     def add(cls, name, user_pass, roles):
         if name != '':
                 try:

@@ -92,6 +92,7 @@
             <input type="hidden" name="add_user" value="">
             <div>
             <button  class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect update" type="button" >Add</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect update" type="button">Delete</button>
             </div>
         </form>
     </div>
@@ -118,6 +119,7 @@
             <div>
             <input type="hidden" name="add_role" value="">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect update" type="button">Add</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect update" type="button">Delete</button>
             </div>
         </form>
     </div>
@@ -142,13 +144,21 @@ window.addEventListener("load", function () {
     });
     var forms = document.getElementsByClassName("update-form");
     [].forEach.call(forms, function (form) {
-        var button = form.getElementsByTagName('button')[0]
-        button.addEventListener("click", function (event) {
+        var buttons = form.getElementsByTagName('button')
+        buttons[0].addEventListener("click", function (event) {
             sendData($(form).serializeArray(), function () {
                 document.location.reload(true);
             });
-      });
-    })
+        });
+        buttons[1].addEventListener("click", function (event) {
+            var f = $(form).serializeArray();
+            f.push({name: 'del', value: ''});
+            sendData(f, function () {
+                document.location.reload(true);
+            });
+        });
+    
+    });
 });
 </script>
 {% endblock %}

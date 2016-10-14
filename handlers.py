@@ -43,8 +43,18 @@ def usersHandler():
             logging.info('Add role to user ' + user + ' initiated')
             error = User.addRole(user,
                      {request.form['user_role']})
+        elif request.form.has_key('del_role'):
+            user = request.form['user_name']
+            logging.info('Delete role from user ' + user + ' initiated')
+            error = User.delRole(user,
+                     {request.form['user_role']})
+        else:
+            error = 'Wrong request'
         if error:
             logging.warning(error)
+            logging.warning(request)
+            logging.warning(request.form)
+
             return error
         return 'successful'
         #return redirect(url_for('users'))
@@ -57,18 +67,28 @@ def privilegesHandler():
         return renderers.dashboardRenderer()
     if request.method == 'POST':
         error = None
-        if request.form.has_key('delete'):
-            pass
+        if request.form.has_key('del') and request.form.has_key('add_user'):
+            user = request.form['user_name']
+            logging.info('Delete user from ' + user + ' initiated')
+            error = Settings.rmUsersAndRoles(user,
+                    {request.form['user_pass']},
+                    set())
+        elif request.form.has_key('del') and request.form.has_key('add_role'):
+            user = request.form['user_name']
+            logging.info('Delete role from ' + user + ' initiated')
+            error = Settings.rmUsersAndRoles(user,
+                    set(),
+                    {request.form['user_role']})
         elif request.form.has_key('add_user'):
             user = request.form['user_name']
             logging.info('Add user ' + user + ' initiated')
-            error = Settings.addUserAndRoles(user,
+            error = Settings.addUsersAndRoles(user,
                     {request.form['user_pass']},
                     set())
         elif request.form.has_key('add_role'):
             user = request.form['user_name']
             logging.info('Add role to user ' + user + ' initiated')
-            error = Settings.addUserAndRoles(user,
+            error = Settings.addUsersAndRoles(user,
                     set(),
                     {request.form['user_role']})
         if error:

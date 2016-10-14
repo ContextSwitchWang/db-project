@@ -13,7 +13,22 @@ class Settings(ndb.Model):
     users = ndb.StringProperty(repeated=True)
 
     @classmethod
-    def addUserAndRoles(cls, privilege, users, roles):
+    def rmUsersAndRoles(cls, privilege, users, roles):
+        setting = cls.getSetting(privilege)
+        if setting == None:
+            return 'privilege not found'
+        try:
+            users = set(setting.users).difference(users)
+            roles = set(setting.roles).difference(roles)
+            Settings(id = privilege,
+                     users = list(users),
+                     roles = list(roles)).put()
+        except Exception as e:
+            logging.warning(e)
+            return 'Error in uploading settings'
+        return None
+    @classmethod
+    def addUsersAndRoles(cls, privilege, users, roles):
         setting = cls.getSetting(privilege)
         if setting != None:
             users = users.union(setting.users)
