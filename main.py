@@ -10,15 +10,13 @@ app.config['DEBUG'] = True
 app.secret_key = '\xe8\xadI\ni\x89\xe7_\xbb\x9a\x02=\xeb\xd2|\xa5T5\xb8Q\x18Vw\xa2'
 privilege_strings = {'usermanage', 'privilegemanage'}
 #TODO: mv to google storage
-wpi_logo='WPI_Inst_Prim_FulClr_Rev.png'
-
 
 with app.app_context():
     Settings.initPrivileges(privilege_strings)
 
 @app.before_request
 def staticResourcesSetup():
-    g.wpi_logo_url = url_for('static', filename=wpi_logo)
+    g.wpi_logo_url = url_for('static', filename='WPI_Inst_Prim_FulClr_Rev.png')
     g.teamname = "Team Awesome"
 
 @app.before_request
