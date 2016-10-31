@@ -1,3 +1,7 @@
+# Database Project Django
+
+I rewrote it with Django. The goal is to create a website to manage
+buying and selling products.
 
 # Python Django Skeleton for Google App Engine
 
