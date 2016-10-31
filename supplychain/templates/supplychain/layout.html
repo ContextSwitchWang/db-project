@@ -1,0 +1,108 @@
+{% load i18n %} 
+<!doctype html>
+<head>
+  {% block head %}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css"/>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+      <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+      <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <title>{% block title %}{% trans "Hello" %}{% endblock %}</title>
+  {% endblock %}
+</head>
+<body>
+  {% block content %}
+    <div class="mdl-layout mdl-js-layout">
+    <main class="mdl-layout__content" id="layout-main">
+  {% endblock %}
+    <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    {% block footer %}
+      <footer class="mdl-mega-footer" id="layout-footer">
+        <div class="mdl-mega-footer__left-section">
+          <div class="mdl-logo">
+            {% trans "By Team Awesome" %}
+          </div>
+        </div>
+        <div class="mdl-mega-footer__right-section">
+          <div class="mdl-logo">
+            {% load static %}
+            <img src="https://storage.cloud.google.com/t-scarab-714.appspot.com/WPI_Inst_Prim_FulClr_Rev.png" height="30px">
+          </div>
+        </div>
+      </footer>
+    {% endblock %}
+  </main>
+  </div>
+
+  <style>
+  footer{
+    margin-top: 2em;
+  }
+  /* Change the layout__content class to Flex (instead of inline-block) to allow spacer to work. */
+  .mdl-layout__content {
+    display: -webkit-flex;
+	display: flex;
+    -webkit-flex-direction: column;
+	        flex-direction: column;
+  }
+  </style>
+  <script type="text/javascript">
+      function showSnackbar(data) {
+        var snackbarContainer = document.querySelector('#demo-toast-example');
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+      }
+      // using jQuery
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = $.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      function sendData(data, suc, url) {
+        $.ajax(url, {
+                method: "POST",
+                dataType: 'text',
+                data: data,
+
+            })
+            .done(function (d) {
+                if (d == 'successful') {
+                    suc();
+                }
+                else{
+                    showSnackbar({message: d})
+                }
+            })
+            .fail(function () {
+                showSnackbar({message: '{% trans "Cannot connect to server" %}'})
+            });
+    }
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    window.addEventListener("load", function () {
+        var csrftoken = getCookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    }); 
+  </script>
+</body>

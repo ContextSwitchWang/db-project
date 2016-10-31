@@ -1,0 +1,83 @@
+{% extends "supplychain/layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Login" %}{% endblock %}
+{% block content %}
+{{ block.super }}
+<div id="login-main" class="parent-div page-content">
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+      <h6>{% trans "Awemome Supply Chain Management" %}</h6>
+      <p>{% trans "Welcome to your refined supply chain management experience" %}</p>
+    </div>
+</div>
+    <form action="/login" method="post" class="update-form">
+    {% csrf_token %}
+        <div class="mdl-grid">
+        	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="name">{% trans "Name:" %}</label>
+                <input class="mdl-textfield__input" type="text" id="name" name="user_name" />
+            </div>
+            </div>
+        </div>
+        <div class="mdl-grid">
+        	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label class="mdl-textfield__label" for="pass">{% trans "Password:" %}</label>
+                <input class="mdl-textfield__input" type="password" id="pass" name="user_pass" />
+                <span class="mdl-textfield__error"></span>
+            </div>
+            </div>
+        </div>
+        <div class="mdl-grid">
+           	<div class="mdl-cell mdl-cell--6-col  mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+            <div class="button">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" name="login">
+                    {% trans "Login" %}
+                </button>
+                {% if view.guest %}
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" name="guest">
+                {% trans "continue as a Guest" %}
+                </button>
+              	{% endif %}
+                {% if error %}
+                <br>&nbsp;&nbsp;<h6>{{ error }}</h6>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+    </form>
+<br>
+<br>
+</div>
+<div id="login-spacer"  class="mdl-layout-spacer"></div>
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        var sp = document.getElementById("login-spacer");
+        var d = document.getElementById("login-main");
+        d.style.height = d.offsetHeight + sp.offsetHeight + "px";
+    
+        var form = document.getElementsByClassName("update-form")[0];
+        var buttons = form.getElementsByTagName('button')
+        buttons[0].addEventListener("click", function (event) {
+                sendData($(form).serializeArray(), function () {
+                    window.location.replace('/dashboard');
+                }, '/login');
+        });
+        {% if view.guest %}
+        buttons[1].addEventListener("click", function (event) {
+                sendData({'user_name': 'guest', 'user_pass':''}, function () {
+                    window.location.replace('/dashboard');
+                },'/login');
+        });
+        {% endif %}
+    });
+</script>
+<style>
+.mdl-button{
+	margin-top: 0.5em;
+	margin-right: 0.5em;
+}
+</style>
+{% endblock %}

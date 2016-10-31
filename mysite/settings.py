@@ -52,10 +52,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'supplychain.apps.SupplychainConfig',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -96,8 +98,8 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/<your-project-id>:<your-cloud-sql-instance>',
-            'NAME': '<your-database-name>',
+            'HOST': '/cloudsql/t-scarab-714:db-instance',
+            'NAME': 'supplychain',
             'USER': 'root',
         }
     }
@@ -105,10 +107,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': '<your-database-name>',
-            'USER': '<your-database-user>',
-            'PASSWORD': '<your-database-password>',
-            'HOST': '<your-database-host>',
+            'NAME': 'supplychain',
+            'USER': 'djangoapp',
+            'PASSWORD': '2222mmson..qq',
+            'HOST': '173.194.105.181',
             'PORT': '3306',
         }
     }
@@ -133,3 +135,8 @@ USE_TZ = True
 
 STATIC_ROOT='static'
 STATIC_URL = '/static/'
+
+LOGIN_URL='/'
+LOGOUT_REDIRECT_URL='/'
+GUEST_LOGIN='guest'
+AUTHENTICATION_BACKENDS=['django.contrib.auth.backends.ModelBackend', 'supplychain.scAuthBackend.GuestBackend']
