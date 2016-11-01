@@ -32,10 +32,10 @@
      <a href="/dashboard" class="mdl-navigation__link">
          {% trans "Dashboard" %}
      </a>
-    {% if perms.auth.view_user %}
-       	<a href="/users" class="mdl-navigation__link">
-            {% trans "View or Edit Users" %}</a>
-    {% endif %}
+    {% for i in item_list %}
+    <a href="{{ i.url }}" class="mdl-navigation__link">
+            {{ i.short_desc }}
+    {% endfor %}
 
 	    <a href="/logout" class="mdl-navigation__link">
             {% trans "Log out" %}
