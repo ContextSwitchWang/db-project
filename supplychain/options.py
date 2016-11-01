@@ -71,4 +71,3 @@ class ModelAllViews(object):
     @property
     def urls(self):
         return self.get_urls()
-

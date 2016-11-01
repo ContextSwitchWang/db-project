@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^login$', views.LoginView.as_view(), name='login'),
     url(r'^dashboard$', views.dashboard.as_view(), name='dashboard'),
     url(r'^logout$', logout_then_login, name='logout'),
-    url(r'^', include(views.dashboard.dashboard_urls)),
+    url(r'^', include(views.dashboardItems.urls)),
 ]

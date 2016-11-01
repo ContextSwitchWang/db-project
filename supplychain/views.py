@@ -37,8 +37,11 @@ class LoginView(helloLoginView):
             return HttpResponse('invalid login/password')
 
 class dashboard(dashboardItemsMixin, LoginRequiredMixin, TemplateView):
+    """ the dashboard page """
     template_name = 'supplychain/dashboard.html'
-    dashboard_items = dashboardItemsMixin.dashboard_items
+
+class dashboardItems(object):
+    items = dashboardItemsMixin.items
     from django.conf.urls import url, include
-    dashboard_models = [ ModelAllViews(item.model) for item in dashboard_items]
-    dashboard_urls = [url(item.url[1:], include(dashboard_models[i].urls)) for i, item in enumerate(dashboard_items)]
+    models = [ ModelAllViews(item.model) for item in items]
+    urls = [url(item.url[1:], include(models[i].urls)) for i, item in enumerate(items)]

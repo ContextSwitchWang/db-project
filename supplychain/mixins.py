@@ -17,10 +17,11 @@ class item(object):
         self.model = model
 
 class dashboardItemsMixin(object):
-    dashboard_items = [
+    """ add dashboard items and urls to web page  """
+    items = [
         item('User Management', 'View or Edit user', "You can add, edit or delete users and their roles here.", '/users/', User),
     ]
     def get_context_data(self, **kwargs):
         context = super(dashboardItemsMixin, self).get_context_data(**kwargs)
-        context['item_list'] = [item for item in self.dashboard_items if self.request.user.has_perm(get_permission_codename(item.model, 'view'))]
+        context['item_list'] = [item for item in self.items if self.request.user.has_perm(get_permission_codename(item.model, 'view'))]
         return context
