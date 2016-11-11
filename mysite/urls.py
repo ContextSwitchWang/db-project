@@ -16,8 +16,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from polls.views import index
+from django.http import HttpResponse
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('supplychain.urls')),
+    url(r'^.well-known/acme-challenge/oS1VK6tCBRbFVkloMhKKNchPS9d4InuBHGMacMKrzno$', 
+        lambda r: HttpResponse('oS1VK6tCBRbFVkloMhKKNchPS9d4InuBHGMacMKrzno.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
+    url(r'^.well-known/acme-challenge/nZY7tD5KBulKhRXkJcARk26_JCrSSquMHo_ElgOOGo4', 
+        lambda r: HttpResponse('nZY7tD5KBulKhRXkJcARk26_JCrSSquMHo_ElgOOGo4.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
 ]

@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views import generic
 from django.contrib.auth.models import User
 from mixins  import dashboardItemsMixin
-
+from django.template.loader  import TemplateDoesNotExist, get_template
 class displayView(dashboardItemsMixin, objectsViewPermissionMixin, PermissionRequiredMixin, generic.ListView):
     """ a class that should be general and work on all kinds of models  
         display all objects line by line, with delete functionality"""
@@ -45,13 +45,18 @@ class ModelAllViews(object):
         self.createcls = type("%s_create_view" % self.opts.model_name, 
                     (createView,), 
                     dict(model=self.model, 
-                        template_name=self.get_create_template_name(), 
+                        template_name=self.get_template_name('create'), 
                         fields=fields))
         self.displaycls = type("%s_display_view" % self.opts.model_name, 
                     (displayView,), 
-                    dict(model=self.model, template_name=self.get_template_name()))
-    def get_template_name(self):
-        return "supplychain/%s_display.html" % self.opts.model_name
+                    dict(model=self.model, template_name=self.get_template_name('display')))
+    def get_template_name(self, view):
+        name = "supplychain/%s_%s.html" % (self.opts.model_name, view)
+        try: 
+            get_template(name)
+            return name
+        except TemplateDoesNotExist:
+            return "supplychain/user_display.html"
     def get_update_template_name(self):
         return "supplychain/%s_update.html" % self.opts.model_name
     def get_create_template_name(self):

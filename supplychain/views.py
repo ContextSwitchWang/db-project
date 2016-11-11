@@ -14,7 +14,8 @@ from django.db import models
 from utils import get_permission_codename
 from mixins  import item, dashboardItemsMixin
 from options import ModelAllViews
-
+from django.contrib.auth.models import User, Group
+from . import models
 class helloLoginView(TemplateView):
     """ display the login page """
     template_name = 'supplychain/helloLogin.html'
@@ -41,7 +42,8 @@ class dashboard(dashboardItemsMixin, LoginRequiredMixin, TemplateView):
     template_name = 'supplychain/dashboard.html'
 
 class dashboardItems(object):
+    """ generate urls and models """
     items = dashboardItemsMixin.items
     from django.conf.urls import url, include
-    models = [ ModelAllViews(item.model) for item in items]
+    models = [ ModelAllViews(User), ModelAllViews(Group), models.BetUrls, models.CountUrls ]
     urls = [url(item.url[1:], include(models[i].urls)) for i, item in enumerate(items)]

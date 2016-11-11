@@ -3,6 +3,10 @@
 I rewrote it with Django. The goal is to create a website to manage
 buying and selling products.
 
+# Usage Guide
+
+`supplychain` contains our project specific source code.
+
 # Python Django Skeleton for Google App Engine
 
 A skeleton for building Python applications on Google App Engine with the

@@ -22,14 +22,14 @@
     </div>
     {% block footer %}
       <footer class="mdl-mega-footer" id="layout-footer">
-        <div class="mdl-mega-footer__left-section">
           <div class="mdl-logo">
-            {% trans "By Team Awesome" %}
+              <a href="mailto:admin@sucha.in">
+                <i class="material-icons">mail_outline</i>
+              </a>
           </div>
-        </div>
+        {% trans "By Team Awesome" %}
         <div class="mdl-mega-footer__right-section">
           <div class="mdl-logo">
-            {% load static %}
             <img src="https://storage.cloud.google.com/t-scarab-714.appspot.com/WPI_Inst_Prim_FulClr_Rev.png" height="30px">
           </div>
         </div>

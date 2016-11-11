@@ -1,0 +1,23 @@
+是否允许律师加入群？
+<br>
+A建议
+<br>
+B单独开群
+<br>
+C不建议
+<br>
+D无所谓
+<br>
+Counts:
+<table>
+{% for dict in view.getCounts %}
+    <tr>
+        <td>{{ dict.choice }}</td>
+        <td>{{ dict.total }}</td>
+    </tr>
+{% endfor %}
+</table>
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message" />
+</form>
