@@ -36,6 +36,7 @@ class Company(models.Model):
 
 class Inventory(models.Model):
     id = models.AutoField(primary_key = True)
+    name = models.CharField(max_length = 200)
     size = models.IntegerField()
     price = models.FloatField()
     address = models.CharField(max_length = 200)
@@ -45,6 +46,7 @@ class Catalog(models.Model):
     name = models.CharField(max_length = 200)
     unit_price = models.FloatField()
     spec = models.CharField(max_length = 200)
+    size = models.FloatField()
     PRODUCT = 'PRODUCT'
     COMPONENT = 'COMPONENT'
     catalog_type = (
@@ -68,7 +70,8 @@ class Account(models.Model):
 #Key relations: Order, Item, Transaction, Order_Item list
 class Order(models.Model):
     id = models.AutoField(primary_key = True)
-    date = models.DateTimeField()
+    #
+    date = models.DateField(auto_now_add = True)
     price = models.FloatField()
     #foreign Key - the supply or distribute company
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
