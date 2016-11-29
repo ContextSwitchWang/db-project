@@ -1,0 +1,45 @@
+{% extends "supplychain/loggedin.html" %}
+{% load i18n %}
+{% block pagecontent %}
+    {% block pgcontent %}
+    {% endblock %}
+<style type="text/css">
+.mdl-button{
+    line-height: 20px;
+    height: 20px;
+}
+</style>
+<script type="text/javascript">
+window.addEventListener("load", function () {
+    // We need to access the form element
+    var collections = document.getElementsByClassName("delete");
+    [].forEach.call(collections, function (button) {
+        button.addEventListener("click", function (event) {
+            sendData({'delete' : button.getAttribute('value')}, function () {
+                document.location.reload(true);
+            });
+      });
+    });
+    var forms = document.getElementsByClassName("update-form");
+    forms[0].getElementsByTagName('button')[0].addEventListener("click", function (event) {
+            sendData($(forms[0]).serializeArray(), function () {
+                document.location.reload(true);
+            });
+    });
+    forms[1].getElementsByTagName('button')[0].addEventListener("click", function (event) {
+            var f = $(forms[1]).serializeArray()
+            f.push({name: 'add_role', value: ''});
+            sendData(f, function () {
+                document.location.reload(true);
+            });
+    });
+    forms[1].getElementsByTagName('button')[1].addEventListener("click", function (event) {
+            var f = $(forms[1]).serializeArray()
+            f.push({name: 'del_role', value: ''});
+            sendData(f, function () {
+                document.location.reload(true);
+            });
+    });
+});
+</script>
+{% endblock %}

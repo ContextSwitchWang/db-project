@@ -10,7 +10,6 @@ import logging
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.views import generic
 from django.views.generic.base import TemplateView
-from django.db import models
 from utils import get_permission_codename
 from mixins  import item, dashboardItemsMixin
 from options import ModelAllViews
@@ -45,5 +44,5 @@ class dashboardItems(object):
     """ generate urls and models """
     items = dashboardItemsMixin.items
     from django.conf.urls import url, include
-    models = [ ModelAllViews(User), ModelAllViews(Group), models.BetUrls, models.CountUrls ]
-    urls = [url(item.url[1:], include(models[i].urls)) for i, item in enumerate(items)]
+    ItemModels =  [ModelAllViews(model) for model in [User, Group, models.Company]] + [models.BetUrls, models.CountUrls ]
+    urls = [url(item.url[1:], include(ItemModels[i].urls)) for i, item in enumerate(items)]

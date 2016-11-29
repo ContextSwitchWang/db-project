@@ -1,6 +1,6 @@
 {% extends "supplychain/loggedin.html" %}
 {% load i18n %}
-{% block title %}{% trans "View or edit users" %}{% endblock %}
+{% block title %}{% trans "Create "%}{{ view.model_name }}{% endblock %}
 {% block pagecontent %}
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
