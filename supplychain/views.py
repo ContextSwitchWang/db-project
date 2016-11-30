@@ -22,7 +22,7 @@ class helloLoginView(TemplateView):
     def guest(self):
         guest = settings.GUEST_LOGIN
         return authenticate(username=guest)
-        
+
 class LoginView(helloLoginView):
     """ display the login page on get, accept login on post """
     def post(self, request):
@@ -44,5 +44,9 @@ class dashboardItems(object):
     """ generate urls and models """
     items = dashboardItemsMixin.items
     from django.conf.urls import url, include
-    ItemModels =  [ModelAllViews(model) for model in [User, Group, models.Company]] + [models.BetUrls, models.CountUrls ]
+    ItemModels =  [ModelAllViews(model) for model in [User, Group,\
+                        models.Company, models.Inventory, models.Catalog, models.Account,\
+                        models.Order, models.Item, models.Transaction, models.Order_Item \
+                        ]] \
+                + [models.BetUrls, models.CountUrls ]
     urls = [url(item.url[1:], include(ItemModels[i].urls)) for i, item in enumerate(items)]

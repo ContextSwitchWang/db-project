@@ -30,7 +30,16 @@ class dashboardItemsMixin(object):
     items = [
         item(_('User Management'), _('View or Edit User'), _("You can add, edit or delete users and their attributes here."), '/users/', User),
         item(_('Group Management'), _('View or Edit Group'), _("You can add, edit or delete groups and their attributes here."), '/groups/', Group),
+
         item(_('Companys'), _('View or Edit Companys'), _("You can add, edit or delete companys and their attributes here."), '/companys/', models.Company),
+        item(_('Inventory'), _('View or Edit Inventory'), _("You can add, edit or delete Inventory and their attributes here."), '/Inventory/', models.Inventory),
+        item(_('Catalog'), _('View or Edit Catalog'), _("You can add, edit or delete Catalog and their attributes here."), '/Catalog/', models.Catalog),
+        item(_('Account'), _('View or Edit Account'), _("You can add, edit or delete Account and their attributes here."), '/Account/', models.Account),
+        item(_('Order'), _('View or Edit Order'), _("You can add, edit or delete Order and their attributes here."), '/Order/', models.Order),
+        item(_('Item'), _('View or Edit Item'), _("You can add, edit or delete Item and their attributes here."), '/Item', models.Item),
+        item(_('Transaction'), _('View or Edit Transaction'), _("You can add, edit or delete Transaction and their attributes here."), '/Transaction/', models.Transaction),
+        item(_('Order_Item'), _('View or Edit Order_Item'), _("You can add, edit or delete Order_Item and their attributes here."), '/Order_Item/', models.Order_Item),
+
         item(_('Bet'), _('Bet Here!'), _("You can Bets here"), '/bets/', models.Bet),
         item(_('Bet'), _('Bet Here!'), _("You can Bets here"), '/counts/', models.CountModel),
     ]
