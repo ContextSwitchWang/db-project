@@ -30,6 +30,7 @@ class dashboardItemsMixin(object):
     items = [
         item(_('User Management'), _('View or Edit User'), _("You can add, edit or delete users and their attributes here."), '/users/', User),
         item(_('Group Management'), _('View or Edit Group'), _("You can add, edit or delete groups and their attributes here."), '/groups/', Group),
+        item(_('Companys'), _('View or Edit Companys'), _("You can add, edit or delete companys and their attributes here."), '/companys/', models.Company),
         item(_('Bet'), _('Bet Here!'), _("You can Bets here"), '/bets/', models.Bet),
         item(_('Bet'), _('Bet Here!'), _("You can Bets here"), '/counts/', models.CountModel),
     ]

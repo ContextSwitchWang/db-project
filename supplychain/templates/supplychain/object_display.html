@@ -1,0 +1,34 @@
+{% extends "supplychain/display_base.html" %}
+{% load i18n %}
+{% load sc_extras %}
+{% block title %}{% trans "View or Edit "%}{{ view.model_name }} {% endblock %}
+{% block pgcontent %}
+<h6>{{ view.model_name }}</h6>
+<div class="mdl-grid mdl-grid--no-spacing">
+    {% for field in view.opts.fields %}
+    <div class="mdl-cell mdl-cell--1-col">{{ field.name }}</div>
+    {% endfor %}
+</div>
+<div class="mdl-grid mdl-grid--no-spacing">
+<div class="mdl-cell mdl-cell--12-col">
+    {% for u in object_list %}
+        <form action="/users" method="post">
+        <div class="mdl-grid mdl-grid--no-spacing">
+            {% for field in view.opts.fields %}
+                <div class="mdl-cell mdl-cell--1-col">
+                {% model_get_field u field.name %}
+                </div>
+            {% endfor %}
+            <div class="mdl-cell mdl-cell--1-col"><a href="{{ u.get_absolute_url }}">{% trans "Update" %}</a></div>
+            <div class="mdl-cell mdl-cell--1-col">
+                <button class="mdl-button mdl-js-button mdl-button--accent button-small delete" type="button" name="delete" value="{{ u.pk }}">Delete
+                </button>
+            </div>
+        </div>
+        </form>
+    {% endfor %}
+</div>
+</div>
+<br><br>
+<a href='create'>Create</a>
+{% endblock %}

@@ -13,8 +13,6 @@ def add_view_permissions(sender, **kwargs):
 
     # for each of our content types
     for content_type in ContentType.objects.all():
-        if not content_type._meta.default_permissions:
-            continue
         # build our permission slug
         codename = "view_%s" % content_type.model
 
@@ -31,6 +29,6 @@ class SupplychainConfig(AppConfig):
     verbose_name = _("Supply Chain Management")
     def ready(self):
         # check for all our view permissions
-#        post_migrate.connect(add_view_permissions)
+        post_migrate.connect(add_view_permissions)
         pass
 

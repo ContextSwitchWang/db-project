@@ -4,6 +4,7 @@ from django.views import generic
 from django.contrib.auth.models import User
 from mixins  import dashboardItemsMixin
 from django.template.loader  import TemplateDoesNotExist, get_template
+from django.http import HttpResponse
 class displayView(dashboardItemsMixin, objectsViewPermissionMixin, PermissionRequiredMixin, generic.ListView):
     """ a class that should be general and work on all kinds of models  
         display all objects line by line, with delete functionality"""
@@ -30,6 +31,7 @@ class ModelAllViews(object):
         super(ModelAllViews, self).__init__()
         self.model = model
         self.opts = model._meta
+        model_name = self.opts.verbose_name.title()
 
         fields = fields if fields else '__all__'
         def get_absolute_url(self):
@@ -39,8 +41,9 @@ class ModelAllViews(object):
         self.updatecls = type("%s_update_view" % self.opts.model_name, 
                     (updateView,), 
                     dict(model=self.model, 
-                        template_name=self.get_update_template_name(), 
-                        fields=fields))
+                        template_name=self.get_template_name('update'), 
+                        fields=fields,
+                        model_name=model_name))
 
         self.createcls = type("%s_create_view" % self.opts.model_name, 
                     (createView,), 
@@ -49,14 +52,17 @@ class ModelAllViews(object):
                         fields=fields))
         self.displaycls = type("%s_display_view" % self.opts.model_name, 
                     (displayView,), 
-                    dict(model=self.model, template_name=self.get_template_name('display')))
+                    dict(model=self.model,
+                        template_name=self.get_template_name('display'),
+                        model_name=model_name,
+                        opts=self.opts))
     def get_template_name(self, view):
         name = "supplychain/%s_%s.html" % (self.opts.model_name, view)
         try: 
             get_template(name)
             return name
         except TemplateDoesNotExist:
-            return "supplychain/user_display.html"
+            return "supplychain/object_%s.html" % view
     def get_update_template_name(self):
         return "supplychain/%s_update.html" % self.opts.model_name
     def get_create_template_name(self):

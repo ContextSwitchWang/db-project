@@ -1,9 +1,9 @@
 {% extends "supplychain/loggedin.html" %}
 {% load i18n %}
-{% block title %}{% trans "View or edit users" %}{% endblock %}
+{% block title %}{% trans "Update "%}{{ view.model_name }}{% endblock %}
 {% block pagecontent %}
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Create" />
+    <input type="submit" value="Update" />
 </form>
 {% endblock %}
