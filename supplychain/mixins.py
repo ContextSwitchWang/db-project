@@ -36,7 +36,7 @@ class dashboardItemsMixin(object):
         item(_('Catalog'), _('View or Edit Catalog'), _("You can add, edit or delete Catalog and their attributes here."), '/Catalog/', models.Catalog),
         item(_('Account'), _('View or Edit Account'), _("You can add, edit or delete Account and their attributes here."), '/Account/', models.Account),
         item(_('Order'), _('View or Edit Order'), _("You can add, edit or delete Order and their attributes here."), '/Order/', models.Order),
-        item(_('Item'), _('View or Edit Item'), _("You can add, edit or delete Item and their attributes here."), '/Item', models.Item),
+        item(_('Item'), _('View or Edit Item'), _("You can add, edit or delete Item and their attributes here."), '/Item/', models.Item),
         item(_('Transaction'), _('View or Edit Transaction'), _("You can add, edit or delete Transaction and their attributes here."), '/Transaction/', models.Transaction),
         item(_('Order_Item'), _('View or Edit Order_Item'), _("You can add, edit or delete Order_Item and their attributes here."), '/Order_Item/', models.Order_Item),
 
