@@ -5,9 +5,18 @@ from django.contrib.auth.models import User
 from mixins  import dashboardItemsMixin
 from django.template.loader  import TemplateDoesNotExist, get_template
 from django.http import HttpResponse
+from django import forms
+def pk_from_instance(self, obj):
+    if type(obj) == str:
+        return obj
+    return str(obj._meta.model_name).capitalize() + str(obj.id)
+
+forms.ModelChoiceField.label_from_instance = pk_from_instance
+
 class displayView(dashboardItemsMixin, objectsViewPermissionMixin, PermissionRequiredMixin, generic.ListView):
     """ a class that should be general and work on all kinds of models  
         display all objects line by line, with delete functionality"""
+    paginate_by=100
     def post(self, request):
         try:
             pk = request.POST['delete']
@@ -74,6 +83,7 @@ class ModelAllViews(object):
         info = self.opts.app_label, self.opts.model_name
         urlpatterns = [
             url(r'^$', self.displaycls.as_view(), name='%s_%s_displaylist' % info),
+            url(r'^(?P<page>[0-9]+)/$', self.displaycls.as_view(), name='%s_%s_displaylist_page' % info),
             url(r'^create/$', self.createcls.as_view(), name='%s_%s_create' % info),
             url(r'^(?P<pk>.+)/update/$', self.updatecls.as_view(), name='%s_%s_update' % info),
         ]
