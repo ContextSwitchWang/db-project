@@ -1,0 +1,27 @@
+{% extends "supplychain/loggedin.html" %}
+{% load i18n %}
+{% block title %}{% trans "Status "%}{% endblock %}
+{% block pagecontent %}
+<h6> Status </h6>
+Total Exchange Volume: {{ view.volume }}
+<br>
+<br>
+Balance By Company:
+{% for c in view.all_company_balance %}
+<div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
+</div>
+{% endfor %}
+
+<br>
+<br>
+Inventory Status:
+{% for c in view.all_inventory_count %}
+<div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
+</div>
+{% endfor %}
+
+{% endblock %}
