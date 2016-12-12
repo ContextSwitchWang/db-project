@@ -56,7 +56,7 @@ class dashboardItems(object):
     from django.conf.urls import url, include
     ItemModels =  [StatusUrls] + [ModelAllViews(model) for model in [User, Group,\
                         models.Company, models.Inventory, models.Catalog, models.Account,\
-                        models.Order, models.Item, models.Transaction, models.Order_Item \
-                        ]] \
+                        models.Order, models.Transaction, models.Order_Item \
+                        , models.Item, ]] \
                 + [models.BetUrls, models.CountUrls ]
     urls = [url(item.url[1:], include(ItemModels[i].urls)) for i, item in enumerate(items)]

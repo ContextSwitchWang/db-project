@@ -33,6 +33,8 @@ class Company(models.Model):
     )
     companytype = models.CharField(max_length = 20, choices = company_type, default = DISTRIBUTOR)
 
+    def __str__(self):
+        return self.name;
 
 
 class Inventory(models.Model):
@@ -41,6 +43,9 @@ class Inventory(models.Model):
     size = models.IntegerField()
     price = models.FloatField()
     address = models.CharField(max_length = 200)
+    def __str__(self):
+        return self.name;
+
 
 class Catalog(models.Model):
     id = models.AutoField(primary_key = True)
@@ -56,6 +61,9 @@ class Catalog(models.Model):
     )
     catalogtype = models.CharField(max_length = 20, choices = catalog_type, default = PRODUCT)
 
+    def __str__(self):
+        return self.name;
+
 class Account(models.Model):
     id = models.AutoField(primary_key = True)
     bank = models.CharField(max_length = 200)
@@ -67,6 +75,8 @@ class Account(models.Model):
     #Not quite sure is company a foreign key of company, what about myself
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     notes = models.CharField(max_length = 200)
+    def __str__(self):
+        return "Account " + str(self.id);
 
 #Key relations: Order, Item, Transaction, Order_Item list
 class Order(models.Model):
@@ -84,7 +94,8 @@ class Order(models.Model):
         (SELLOUT, 'SELLOUT'),
     )
     ordertype = models.CharField(max_length = 20, choices = order_type, default = BUYIN)
-
+    def __str__(self):
+        return "Order " + str(self.id);
 
 class Item(models.Model):
     #SN is id
@@ -101,6 +112,8 @@ class Item(models.Model):
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE)
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     notes = models.CharField(max_length = 200)
+    def __str__(self):
+        return "Item" + str(self.id);
 
 class Transaction(models.Model):
     id = models.AutoField(primary_key = True)
@@ -120,6 +133,10 @@ class Transaction(models.Model):
     )
     state = models.CharField(max_length = 20, choices = TRANSACTION_STATE, default = UNSTART)
     notes = models.CharField(max_length = 200)
+
+    order_id = models.ForeignKey(Order, on_delete = models.CASCADE, default = -1)
+    def __str__(self):
+        return str(self.id);
 
 class Order_Item(models.Model):
     order_id = models.ForeignKey(Order, on_delete = models.CASCADE)
