@@ -19,7 +19,7 @@ from . import utils
 from django.conf.urls import url
 import django.db.models.aggregates as agg
 from django.db.models import Case, Value, When, F
-        
+
 
 class helloLoginView(TemplateView):
     """ display the login page """
@@ -62,6 +62,7 @@ class StatusView(dashboardItemsMixin, TemplateView):
     def all_inventory_count(self):
         return models.Item.objects.values_list('inventory__name').annotate(
                 agg.Count('id'))
+
 
 class StatusUrls(object):
     urls = urlpatterns = [
