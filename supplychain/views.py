@@ -59,6 +59,9 @@ class StatusView(dashboardItemsMixin, TemplateView):
              When(ordertype=models.Order.SELLOUT, then='price'),
             )))
         return [(b[0], utils.addDollarSign(b[1])) for b in bs]
+    def all_inventory_count(self):
+        return models.Item.objects.values_list('inventory__name').annotate(
+                agg.Count('id'))
 
 class StatusUrls(object):
     urls = urlpatterns = [
