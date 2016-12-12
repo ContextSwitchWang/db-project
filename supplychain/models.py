@@ -108,10 +108,11 @@ class Item(models.Model):
         (AVAILABLE, 'AVAILABLE'),
     )
     state = models.CharField(max_length = 20, choices = ITEM_STATE, default = AVAILABLE)
-
     catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE)
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     notes = models.CharField(max_length = 200)
+
+    order = models.ForeignKey(Order, null = True, on_delete = models.CASCADE, default = None)
     def __str__(self):
         return "Item" + str(self.id);
 
@@ -134,7 +135,7 @@ class Transaction(models.Model):
     state = models.CharField(max_length = 20, choices = TRANSACTION_STATE, default = UNSTART)
     notes = models.CharField(max_length = 200)
 
-    order_id = models.ForeignKey(Order, on_delete = models.CASCADE, default = -1)
+    order = models.ForeignKey(Order, on_delete = models.CASCADE, default = -1)
     def __str__(self):
         return str(self.id);
 
