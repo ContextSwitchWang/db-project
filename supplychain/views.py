@@ -1,3 +1,4 @@
+from django.db import connection
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -19,7 +20,7 @@ from . import utils
 from django.conf.urls import url
 import django.db.models.aggregates as agg
 from django.db.models import Case, Value, When, F
-        
+from django.db.models.functions import Coalesce       
 
 class helloLoginView(TemplateView):
     """ display the login page """
@@ -52,13 +53,52 @@ class StatusView(dashboardItemsMixin, TemplateView):
     def volume(self):
         return utils.addDollarSign(models.Order.objects.aggregate(agg.Sum('price'))['price__sum'])
 
-    def all_company_balance(self):
-        cs = models.Order.objects.values_list('company__name')
-        bs = cs.annotate(balance=agg.Sum(
-        Case(When(ordertype=models.Order.BUYIN, then=F('price') * -1),
-             When(ordertype=models.Order.SELLOUT, then='price'),
-            )))
+    def _all_company_payable(self):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+            select c.name, COALESCE(
+            sum(Case
+            		when ordertype='SELLOUT'
+            		then price
+            		else price * -1
+            	end), 0)
+            From supplychain.supplychain_company as c LEFT JOIN supplychain.supplychain_order as o
+            on c.id = o.company_id
+            group by c.name
+            order by c.name;
+                    """)
+            return cursor.fetchall()
+
+    def _company_transaction(self):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+            select o1.account_owner, o1.sum - o2.sum from
+                (SELECT ac.account_owner, COALESCE(sum(tr.amount), 0) as sum
+                    FROM supplychain.supplychain_account as ac LEFT JOIN supplychain.supplychain_transaction as tr
+                    on tr.fr_account_id = ac.id
+                    group by ac.account_owner) as o1 JOIN
+                (SELECT ac.account_owner, COALESCE(sum(tr.amount), 0) as sum
+                    FROM supplychain.supplychain_account as ac LEFT JOIN supplychain.supplychain_transaction as tr
+                    on tr.to_account_id = ac.id
+                    group by ac.account_owner) as o2
+                on o1.account_owner = o2.account_owner
+                order by o1.account_owner;
+                    """)
+            return cursor.fetchall()
+        
+    def all_company_payable(self):
+        bs = self._all_company_payable()
         return [(b[0], utils.addDollarSign(b[1])) for b in bs]
+
+    def company_transaction(self):
+        bs = self._company_transaction()
+        return [(b[0], utils.addDollarSign(b[1])) for b in bs]
+
+    def all_company_balance(self):
+        bs = self._all_company_payable()
+        ts = self._company_transaction()
+        return [(b[0], utils.addDollarSign(b[1] - t[1])) for b, t in zip(bs, ts)]
+
     def all_inventory_count(self):
         return models.Item.objects.values_list('inventory__name').annotate(
                 agg.Count('id'))
