@@ -3,6 +3,7 @@ from __future__ import unicode_literals, division
 from django.conf import settings
 from django.db import models
 from django.views.generic.edit import FormView
+from django.views.generic.base import TemplateView
 from django.conf.urls import url
 from django import forms
 from django.shortcuts import redirect
@@ -237,3 +238,6 @@ class CountUrls(object):
     urls = urlpatterns = [
             url(r'^$', CountModelView.as_view(), name='counts_display'),
         ]
+
+class Status(models.Model):
+    pass

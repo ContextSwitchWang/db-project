@@ -15,6 +15,8 @@ from mixins  import item, dashboardItemsMixin
 from options import ModelAllViews
 from django.contrib.auth.models import User, Group
 from . import models
+from django.conf.urls import url
+
 class helloLoginView(TemplateView):
     """ display the login page """
     template_name = 'supplychain/helloLogin.html'
@@ -40,11 +42,19 @@ class dashboard(dashboardItemsMixin, LoginRequiredMixin, TemplateView):
     """ the dashboard page """
     template_name = 'supplychain/dashboard.html'
 
+class StatusView(dashboardItemsMixin, TemplateView):
+    template_name = 'supplychain/status.html'
+
+class StatusUrls(object):
+    urls = urlpatterns = [
+            url(r'^$', StatusView.as_view(), name='status'),
+        ]
+
 class dashboardItems(object):
     """ generate urls and models """
     items = dashboardItemsMixin.items
     from django.conf.urls import url, include
-    ItemModels =  [ModelAllViews(model) for model in [User, Group,\
+    ItemModels =  [StatusUrls] + [ModelAllViews(model) for model in [User, Group,\
                         models.Company, models.Inventory, models.Catalog, models.Account,\
                         models.Order, models.Item, models.Transaction, models.Order_Item \
                         ]] \

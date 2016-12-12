@@ -28,6 +28,7 @@ def perm_exists(model, perm):
 class dashboardItemsMixin(object):
     """ add dashboard items and urls to web page  """
     items = [
+        item(_('Status'), _('View Status'), _("You can view the status of your business here."), '/status/', models.Status),
         item(_('User Management'), _('View or Edit User'), _("You can add, edit or delete users and their attributes here."), '/users/', User),
         item(_('Group Management'), _('View or Edit Group'), _("You can add, edit or delete groups and their attributes here."), '/groups/', Group),
 
