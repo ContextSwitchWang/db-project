@@ -97,6 +97,7 @@ class Order(models.Model):
     def __str__(self):
         return "Order " + str(self.id);
 
+
 class Item(models.Model):
     #SN is id
     id = models.AutoField(primary_key = True)
@@ -115,6 +116,9 @@ class Item(models.Model):
     order = models.ForeignKey(Order, null = True, on_delete = models.CASCADE, default = None)
     def __str__(self):
         return "Item" + str(self.id);
+
+
+
 
 class Transaction(models.Model):
     id = models.AutoField(primary_key = True)
@@ -146,25 +150,11 @@ class Order_Item(models.Model):
 #End of all relations
 #Create views include:
 #capital report:
-"""capital report:
-looks like:
-accout1 money_in money_out  balance
-accout2 money_in money_out  balance
 """
-#order report:
-"""active order report:
-looks like:
-order1 order_type(buy or sell) item_state capital_state(should pay) (acually pay)
-order2 item_state capital_state
+define the validator for Item
+
 """
 
-"""inventory report:
-looks like:
-catagory1 inventory1 number
-catagory1 inventory2 number
-catagory2 inventory1 number
-catagory2 inventory2 number
-"""
 
 class Bet(models.Model):
     class Meta:

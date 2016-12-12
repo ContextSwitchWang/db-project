@@ -6,7 +6,7 @@
 Total Exchange Volume: {{ view.volume }}
 <br>
 <br>
-Current Payable By Company
+Balance By Company:
 {% for c in view.all_company_balance %}
 <div class="mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
@@ -14,25 +14,6 @@ Current Payable By Company
 </div>
 {% endfor %}
 
-<br>
-<br>
-Total Payable By Company
-{% for c in view.all_company_payable %}
-<div class="mdl-grid mdl-grid--no-spacing">
-    <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
-    <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
-</div>
-{% endfor %}
-
-<br>
-<br>
-Payments By Company:
-{% for c in view.company_transaction %}
-<div class="mdl-grid mdl-grid--no-spacing">
-    <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
-    <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
-</div>
-{% endfor %}
 <br>
 <br>
 Inventory Status:
