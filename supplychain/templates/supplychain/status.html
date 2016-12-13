@@ -3,24 +3,60 @@
 {% block title %}{% trans "Status "%}{% endblock %}
 {% block pagecontent %}
 <h6> Status </h6>
-Total Exchange Volume: {{ view.volume }}
+
 <br>
-<br>
-Balance By Company:
-{% for c in view.all_company_balance %}
+Capital Report
+<div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--2-col">Company</div>
+    <div class="mdl-cell mdl-cell--2-col">Payable</div>
+    <div class="mdl-cell mdl-cell--2-col">Payments</div>
+    <div class="mdl-cell mdl-cell--2-col">balance</div>
+</div>
+
+{% for c in view.capital_total %}
 <div class="mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
     <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.2 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.3 }}</div>
 </div>
 {% endfor %}
 
 <br>
 <br>
-Inventory Status:
-{% for c in view.all_inventory_count %}
+Inventory Report:
+<div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--2-col">Inventory ID</div>
+    <div class="mdl-cell mdl-cell--2-col">Used</div>
+    <div class="mdl-cell mdl-cell--2-col">Total</div>
+    <div class="mdl-cell mdl-cell--2-col">Available</div>
+</div>
+{% for c in view.inv_total %}
 <div class="mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
     <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.2 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.3 }}</div>
+</div>
+{% endfor %}
+
+<br>
+<br>
+Unfinished Order Report:
+<div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--2-col">Order ID</div>
+    <div class="mdl-cell mdl-cell--2-col">Price</div>
+    <div class="mdl-cell mdl-cell--2-col">Type</div>
+    <div class="mdl-cell mdl-cell--2-col">Trans_State</div>
+    <div class="mdl-cell mdl-cell--2-col">ItemID_list</div>
+</div>
+{% for c in view.order_total %}
+<div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--2-col">{{ c.0 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.1 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.2 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.3 }}</div>
+    <div class="mdl-cell mdl-cell--2-col">{{ c.4 }}</div>
 </div>
 {% endfor %}
 
