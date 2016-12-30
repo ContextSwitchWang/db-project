@@ -27,4 +27,6 @@ urlpatterns = [
         lambda r: HttpResponse('nZY7tD5KBulKhRXkJcARk26_JCrSSquMHo_ElgOOGo4.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
     url(r'^.well-known/acme-challenge/aR6ajHpONTCrJu4TSrMYyo2zAuZlsRFHqP-oJGl7gGQ', 
         lambda r: HttpResponse('aR6ajHpONTCrJu4TSrMYyo2zAuZlsRFHqP-oJGl7gGQ.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
+    url(r'^.well-known/acme-challenge/SCxd9J24NxP8ceOu08n1DbNEuVermmifLKP3BJgyA2I', 
+        lambda r: HttpResponse('SCxd9J24NxP8ceOu08n1DbNEuVermmifLKP3BJgyA2I.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
 ]
