@@ -25,8 +25,8 @@ urlpatterns = [
         lambda r: HttpResponse('oS1VK6tCBRbFVkloMhKKNchPS9d4InuBHGMacMKrzno.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
     url(r'^.well-known/acme-challenge/nZY7tD5KBulKhRXkJcARk26_JCrSSquMHo_ElgOOGo4', 
         lambda r: HttpResponse('nZY7tD5KBulKhRXkJcARk26_JCrSSquMHo_ElgOOGo4.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
-    url(r'^.well-known/acme-challenge/aR6ajHpONTCrJu4TSrMYyo2zAuZlsRFHqP-oJGl7gGQ', 
-        lambda r: HttpResponse('aR6ajHpONTCrJu4TSrMYyo2zAuZlsRFHqP-oJGl7gGQ.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
-    url(r'^.well-known/acme-challenge/SCxd9J24NxP8ceOu08n1DbNEuVermmifLKP3BJgyA2I', 
-        lambda r: HttpResponse('SCxd9J24NxP8ceOu08n1DbNEuVermmifLKP3BJgyA2I.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
+    url(r'^.well-known/acme-challenge/ZqDgPF4umjbCZKqwnRg5a-2AVi9RK9-w97DCMaFusAE', 
+        lambda r: HttpResponse('ZqDgPF4umjbCZKqwnRg5a-2AVi9RK9-w97DCMaFusAE.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
+    url(r'^.well-known/acme-challenge/OQJ0rec1nqkYGO1XjMXWHiin4tDeN8tM90HHFXSMAXk', 
+        lambda r: HttpResponse('OQJ0rec1nqkYGO1XjMXWHiin4tDeN8tM90HHFXSMAXk.ylKeLZEHEpTWJYco-iY94ZYtUL4Cz3C4AhX_LfxjzZk')),
 ]
